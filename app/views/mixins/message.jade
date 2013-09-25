@@ -1,0 +1,12 @@
+mixin message(m)
+    .media
+        a.pull-left(href='#')
+            canvas(id='identicon-#{m.from}', title='#{m.from}', width='48', height='48')
+        .media-body
+            h5.media-heading
+                a(href='/users/#{m.from}')= m.from
+                small &nbsp;says on&nbsp;
+                    = m.date
+            blockquote
+                p
+                    = m.payload

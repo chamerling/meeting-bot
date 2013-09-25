@@ -1,0 +1,52 @@
+extends layouts/default
+
+block content
+    .row
+        #socketinfo
+            .alert.alert-info Connected to channel, waiting for messages...
+        #socketout
+
+        #messages
+            if messages && messages.length >= 1
+                include ./mixins/message
+                each m in messages
+                    +message(m)
+
+                if (pages && pages > 1)
+                    .pagination
+                        ul
+                            != createPagination(pages, page)
+            else
+                .link
+                    blockquote
+                        p
+                            span No messages!
+
+block script
+    script(src='/assets/js/md5.js')
+    script(src='/assets/js/sha1.js')
+    script.
+        render_canvases();
+        var socket = io.connect();
+        var id = 0;
+
+        socket.on('event', function(data) {
+          var uuid = id++;
+          $('#socketinfo').hide();
+          //var out = '<div class=\"link\"><blockquote><p>'+JSON.stringify(data)+'</p></blockquote></div>'
+          var out = '<div class=\"media\"><a class=\"pull-left\" href=\"#\"><canvas id=\"canvas-'+ uuid +'\" title=\"'+data.from+'\" width=\"48\" height=\"48\"></canvas></a><div class=\"media-body\"><h5 class=\"media-heading\"><a href=\"/users/'+data.from+'\">'+data.from+'</a> <small>says on '+data.date+'</small></h5><blockquote><p>'+data.payload+'</p></blockquote></div></div>'
+          $('#socketout').prepend(out);
+          render_canvas(uuid)
+        });
+
+        socket.on('join', function(data) {
+          $('#socketinfo').hide();
+          var out = '<div class=\"media\"><div class=\"media-body\"><h5 class=\"media-heading\"><span class=\"label label-info\">Info</span>&nbsp;<small>' + data.date+ '</small></h5><blockquote><p>'+data.who+' joined the channel</p></blockquote></div></div>'
+          $('#socketout').prepend(out);
+        });
+
+        socket.on('left', function(data) {
+          $('#socketinfo').hide();
+          var out = '<div class=\"media\"><div class=\"media-body\"><h5 class=\"media-heading\"><span class=\"label label-info\">Info</span>&nbsp;<small>' + data.date+ '</small></h5><blockquote><p>'+data.who+' left the channel</p></blockquote></div></div>'
+          $('#socketout').prepend(out);
+        });

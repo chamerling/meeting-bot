@@ -1,0 +1,23 @@
+extends ../layouts/default
+
+block content
+
+    #messages
+        if messages && messages.length >= 1
+            include ../mixins/message
+            each m in messages
+                +message(m)
+            .pagination
+                ul
+                    != createPagination(pages, page)
+        else
+            .link
+                blockquote
+                    p
+                        span No messages!
+
+block script
+    script(src='/assets/js/md5.js')
+    script(src='/assets/js/sha1.js')
+    script.
+        render_canvases();

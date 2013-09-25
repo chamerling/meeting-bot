@@ -1,0 +1,20 @@
+extends ../layouts/default
+
+block content
+  .link
+    a.title(href='/meetings/'+meeting._id) #{meeting._id}
+    blockquote
+      p
+        =meeting
+    hr
+    #messages
+      if messages && messages.length >= 1
+        include ../mixins/message
+        each m in messages
+          +message(m)
+
+block script
+    script(src='/assets/js/md5.js')
+    script(src='/assets/js/sha1.js')
+    script.
+        render_canvases();

@@ -1,0 +1,24 @@
+extends ../layouts/default
+
+block content
+
+  if !meetings
+    .alert No meetings
+  else
+      if meetings.length >= 1
+        each meeting in meetings
+          .link
+            a.title(href='/meetings/'+meeting._id) #{meeting._id}
+            blockquote
+              p
+                =meeting
+              hr
+        if (pages > 1)
+          .pagination
+            ul
+              != createPagination(pages, page)
+      else
+        .link
+          blockquote
+            p
+              span No meetings

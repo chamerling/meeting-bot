@@ -1,0 +1,17 @@
+
+header#header
+  .navbar.navbar-fixed-top(role='navigation')
+    .navbar-inner
+      .container
+        a.brand(href='/') MeetingBot
+        .nav-collapse.collapse
+          ul.nav
+            li
+              a(href='/meetings') Meetings
+            li
+              a(href='/messages') Channel Logs
+        ul.nav.pull-right
+            li
+                form.navbar-search.pull-left(action="/meetings/search", method="post")
+                    input#search-query.search-query(type="text", name="query", placeholder="Search")
+
