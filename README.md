@@ -1,12 +1,40 @@
 # Meeting Bot
 
-Because Hubot is too fun!
+Meeting-bot is an IRC bot which provides features to handle developers meetings. It stores all messages, creates reports, etc...
+Meeting-bot is powered by node (+ express + jade + socket.io) and mongodb.
+
+## Howto
+
+Install and start mongodb, or use an online provider.
+
+Get the sources:
+
+    git clone https://github.com/chamerling/meeting-bot.git
+
+Install modules:
+
+    cd meeting-bot
+    npm install
+
+Change the configuration in config/config.js according to your needs then start:
+
+    npm start
+    # or
+    node server.js
+
+meeting-bot will connect to the defined IRC channel and starts to record messages (More details on available commands below).
+meeting-bot also provides a Web UI with some Websocket support, check it out at http://localhost:3000.
+
+## Commands
+
+TODO!
 
 ## TODO
 
 - Replace URIs in HTML pages with withinString (http://medialize.github.io/URI.js/docs.html#static-withinString)
 - Replace hashtags in messages
 - More actions
+- Reports
 - regexp
 - tests
 
